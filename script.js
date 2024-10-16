@@ -1,23 +1,119 @@
+
+
+const bookList = document.querySelector("#bookList");
+const form = document.querySelector(".add-book");
 const myLibrary = [];
 
-function Book(title, author, numPages, readYet) {
+function Book(title, author, numPages, isRead) {
 	this.title = title;
 	this.author = author;
-	this.numPages = numPages;
-	this.readYet = readYet;
-	this.info = function() {
-		string = this.title + " by " + this.author + ", " + this.numPages + " pages, " + readYet;
-		return string;
+	this.numPages = Number(numPages);
+	this.isRead = isRead;
 	};
 
+
+const bookTitle = document.querySelector("#book_title");
+const bookAuthor = document.querySelector("#book_author");
+const bookPages = document.querySelector("#book_pages");
+const bookRead = document.querySelector("#book_read");
+
 function addBookToLibrary() {
-  // do stuff here
+  const book = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookRead.checked);
+  myLibrary.push(book);
+  console.log(myLibrary);
+
 };
 
-function toggleRead() {
-    // do stuff to switch between read and unread
+const addBookModal = document.querySelector("#addBookModal");
+const addBookBtn = document.querySelector("#addBookBtn");
+addBookBtn.addEventListener("click", () => {
+    addBookModal.showModal();
+});
+const closeBookBtn = document.querySelector(".closeModal");
+closeBookBtn.addEventListener("click", () => {
+    addBookModal.close();
+});
+
+const addBookSubmit = document.querySelector("#addBookSubmit");
+addBookSubmit.addEventListener("click", (e) => {
+    e.preventDefault();
+    bookList.replaceChildren();
+    addBookToLibrary();
+    addBookModal.close();
+    form.reset();
+    refreshBookList();
+
+});
+
+
+function refreshBookList() {
+    let index = 0;
+    bookList.replaceChildren();
+
+    for (const bookItem of myLibrary) {
+        // create all the books in a list
+        const li = document.createElement("li");
+        li.classList.add(index);
+        
+        const h3 = document.createElement("h3");
+        const title = document.createTextNode(bookItem.title);
+        
+        const h4 = document.createElement("h4");
+        const author = document.createTextNode("by: " + bookItem.author);
+        
+        const pPages = document.createElement("p");
+        const pages = document.createTextNode(bookItem.numPages + " pages");
+        
+        const pRead = document.createElement("p");
+        const label = document.createElement("label");
+        label.htmlFor = "is_read";
+        label.appendChild(document.createTextNode("Read: "));
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.classList.add("is-read");
+        checkbox.setAttribute("data-index", index);
+        checkbox.checked = bookItem.isRead ? "checked" : "";
+
+        const bookButton = document.createElement("button");
+        const bookButtonText = document.createTextNode("X Delete");
+        bookButton.setAttribute("data-index", index);
+        bookButton.classList.add("delete-book");
+        
+        bookButton.appendChild(bookButtonText)
+        pRead.appendChild(label);
+        pRead.appendChild(checkbox);
+        pPages.appendChild(pages);
+        h4.appendChild(author);
+        h3.appendChild(title);
+        li.appendChild(h3);
+        li.appendChild(h4);
+        li.appendChild(pPages);
+        li.appendChild(pRead);
+        li.appendChild(bookButton);
+        bookList.appendChild(li);
+
+        index++;
+    };
 };
 
-function deleteBook() {
-    // do stuff to delete the book
+
+bookList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-book")) {
+        deleteBook(e.target.dataset.index);
+    } else if (e.target.classList.contains("is-read")) {
+        //toggle checkbox in array
+        myLibrary[e.target.dataset.index].toggleRead();
+    };
+});
+
+function deleteBook (index) {
+    myLibrary.splice(index, 1);
+    refreshBookList();
+    console.log(myLibrary);
+};
+
+Book.prototype.toggleRead = function() {
+    this.isRead = !this.isRead;
+    refreshBookList();
+    console.log(myLibrary);
 };

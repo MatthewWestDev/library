@@ -7,7 +7,42 @@
     <link rel="stylesheet" href="styles.css" type="text/css" charset="utf-8" />
 </head>
 <body>
-    <h1>Library App</h1>
+    <header>
+        <h1>Library App</h1>
+    <button id="addBookBtn">&plus; Add a Book</button>
+    <dialog id="addBookModal">
+        <div class="modal-content">
+          <button class="closeModal">&times; Close</button>
+          <form method="dialog" class="add-book">
+            <fieldset>
+                <legend>Let's add your book!</legend>
+                <p><i>All fields are required.</i></p>
+                <p>
+                <label for="book_title">Title: (required)</label>
+                <input type="text" name="book_title" id="book_title" required />
+                </p>
+                <p>
+                <label for="book_authro">Author: (required)</label>
+                <input type="text" name="book_author" id="book_author" required />
+                </p>
+                <p>
+                <label for="book_pages">Number of Pages: (required)</label>
+                <input type="number" name="book_pages" id="book_pages" required />
+                </p>
+                <p>
+                <label for="book_read">Read:</label>
+                <input type="checkbox" name="book_read" id="book_read" />
+                </p>
+            </fieldset>
+            <button type="submit" id="addBookSubmit" formnovalidate>Add Book</button>
+        </form>
+        </div>
+    </dialog>
+    </header>
+    <main>
+        <ul id="bookList">
+        </ul>
+    </main>
 
     
 
