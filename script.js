@@ -1,5 +1,3 @@
-
-
 const bookList = document.querySelector("#bookList");
 const form = document.querySelector(".add-book");
 const myLibrary = [];
@@ -11,7 +9,6 @@ function Book(title, author, numPages, isRead) {
 	this.isRead = isRead;
 	};
 
-
 const bookTitle = document.querySelector("#book_title");
 const bookAuthor = document.querySelector("#book_author");
 const bookPages = document.querySelector("#book_pages");
@@ -20,8 +17,6 @@ const bookRead = document.querySelector("#book_read");
 function addBookToLibrary() {
   const book = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookRead.checked);
   myLibrary.push(book);
-  console.log(myLibrary);
-
 };
 
 const addBookModal = document.querySelector("#addBookModal");
@@ -37,14 +32,11 @@ closeBookBtn.addEventListener("click", () => {
 const addBookSubmit = document.querySelector("#addBookSubmit");
 addBookSubmit.addEventListener("click", (e) => {
     e.preventDefault();
-    bookList.replaceChildren();
     addBookToLibrary();
     addBookModal.close();
     form.reset();
     refreshBookList();
-
 });
-
 
 function refreshBookList() {
     let index = 0;
@@ -65,23 +57,27 @@ function refreshBookList() {
         const pages = document.createTextNode(bookItem.numPages + " pages");
         
         const pRead = document.createElement("p");
-        const label = document.createElement("label");
-        label.htmlFor = "is_read";
-        label.appendChild(document.createTextNode("Read: "));
+        pRead.classList.add("p-read");
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.classList.add("is-read");
+        checkbox.classList.add("toggle");
         checkbox.setAttribute("data-index", index);
         checkbox.checked = bookItem.isRead ? "checked" : "";
-
+        const label = document.createElement("label");
+        label.htmlFor = "is_read";
+        label.classList.add("is-read");
+        label.setAttribute("data-index", index);
+        label.appendChild(document.createTextNode("Read"));
+        
         const bookButton = document.createElement("button");
         const bookButtonText = document.createTextNode("X Delete");
         bookButton.setAttribute("data-index", index);
         bookButton.classList.add("delete-book");
         
         bookButton.appendChild(bookButtonText)
-        pRead.appendChild(label);
         pRead.appendChild(checkbox);
+        pRead.appendChild(label);
         pPages.appendChild(pages);
         h4.appendChild(author);
         h3.appendChild(title);
@@ -96,12 +92,10 @@ function refreshBookList() {
     };
 };
 
-
 bookList.addEventListener("click", (e) => {
     if (e.target.classList.contains("delete-book")) {
         deleteBook(e.target.dataset.index);
     } else if (e.target.classList.contains("is-read")) {
-        //toggle checkbox in array
         myLibrary[e.target.dataset.index].toggleRead();
     };
 });
@@ -109,11 +103,9 @@ bookList.addEventListener("click", (e) => {
 function deleteBook (index) {
     myLibrary.splice(index, 1);
     refreshBookList();
-    console.log(myLibrary);
 };
 
 Book.prototype.toggleRead = function() {
     this.isRead = !this.isRead;
     refreshBookList();
-    console.log(myLibrary);
 };
