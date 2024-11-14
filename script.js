@@ -2,12 +2,22 @@ const bookList = document.querySelector("#bookList");
 const form = document.querySelector(".add-book");
 const myLibrary = [];
 
-function Book(title, author, numPages, isRead) {
+class Book {
+
+    constructor( title, author, numPages, isRead ) {
+        this.title = title;
+	    this.author = author;
+	    this.numPages = Number(numPages);
+	    this.isRead = isRead;
+    };
+}
+
+/* function Book(title, author, numPages, isRead) {
 	this.title = title;
 	this.author = author;
 	this.numPages = Number(numPages);
 	this.isRead = isRead;
-	};
+	}; */
 
 const bookTitle = document.querySelector("#book_title");
 const bookAuthor = document.querySelector("#book_author");
