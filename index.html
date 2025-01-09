@@ -1,48 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library - Odin</title>
     <link rel="stylesheet" href="styles.css" type="text/css" charset="utf-8" />
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Library App</h1>
-        <button id="addBookBtn">&plus; Add a Book</button>
-        <dialog id="addBookModal">
+      <h1>Library App</h1>
+      <button id="addBookBtn" type="button">&plus; Add a Book</button>
+      <dialog id="addBookModal">
         <div class="modal-content">
           <button class="closeModal">&times; Close</button>
           <form method="dialog" class="add-book">
             <fieldset>
-                <legend>Let's add your book!</legend>
-                <p><i>All fields are required.</i></p>
-                <p>
+              <legend>Let's add your book!</legend>
+              <p><i>All fields are required.</i></p>
+              <p>
                 <label for="book_title">Title: (required)</label>
-                <input type="text" name="book_title" id="book_title" required />
-                </p>
-                <p>
+                <input type="text" name="book_title" required id="book_title" />
+              </p>
+              <p>
                 <label for="book_authro">Author: (required)</label>
-                <input type="text" name="book_author" id="book_author" required />
-                </p>
-                <p>
+                <input
+                  type="text"
+                  name="book_author"
+                  required
+                  id="book_author"
+                />
+              </p>
+              <p>
                 <label for="book_pages">Number of Pages: (required)</label>
-                <input type="number" name="book_pages" id="book_pages" required />
-                </p>
-                <p>
-                    <input type="checkbox" name="book_read" id="book_read" class="toggle" />
+                <input
+                  type="number"
+                  name="book_pages"
+                  required
+                  id="book_pages"
+                  min="1"
+                />
+              </p>
+              <p>
+                <input
+                  type="checkbox"
+                  name="book_read"
+                  id="book_read"
+                  class="toggle"
+                />
                 <label for="book_read">Read</label>
-                </p>
+              </p>
             </fieldset>
-            <button type="submit" id="addBookSubmit" formnovalidate>&plus; Add Book</button>
-        </form>
+            <button type="submit" id="addBookSubmit">&plus; Add Book</button>
+          </form>
         </div>
-    </dialog>
+      </dialog>
     </header>
     <main>
-        <ul id="bookList">            
-        </ul>
+      <ul id="bookList"></ul>
     </main>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
